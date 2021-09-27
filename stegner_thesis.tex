@@ -1,0 +1,116 @@
+\documentclass[12pt, letterpaper, titlepage]{report}
+
+% Packages
+% Page formatting
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+% Custom date format
+\usepackage[en-US]{datetime2}
+\DTMlangsetup[en-US]{showdayofmonth=false}
+% Hyperlinks
+\usepackage{hyperref}
+% Custom colors
+\usepackage{xcolor}
+% Math packages
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage[ruled, lined]{algorithm2e}
+% Check for known extensions instead of the first dot
+\usepackage{grffile}
+% To-dos
+\usepackage{todonotes}
+% Table rules
+\usepackage{booktabs}
+
+% Figure-related packages
+% Include images
+\usepackage{graphicx}
+\graphicspath{img/}
+% Sub-figures
+\usepackage{caption}
+\usepackage{subcaption}
+% Table placement
+\usepackage{float}
+% Avoid under/overfull in bibliography
+\usepackage{microtype}
+
+% Citations
+\usepackage[
+	citecounter,
+	labelnumber,
+	backend=biber,
+	bibencoding=utf8,
+	sorting=none,
+	style=ieee,
+]{biblatex}
+\addbibresource{./bibliography.bib}
+
+% Code blocks
+\usepackage{listings}
+% Color definitions
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{1.0,1.0,1.0}
+% Code listing style
+\lstdefinestyle{mystyle}{%
+	backgroundcolor=\color{backcolour},
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	keepspaces=false,
+	numbersep=5pt,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=2
+}
+\lstset{style=mystyle}
+
+% Sub-files --- Best to load last?
+\usepackage{subfiles}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Custom Commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% *** References ***
+\newcommand{\figref}[1]{Figure~\ref{#1}}
+\newcommand{\tabref}[1]{Table~\ref{#1}}
+\newcommand{\secref}[1]{Chapter~\ref{#1}}
+\newcommand{\algref}[1]{Algorithm~\ref{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Begin Document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+% *** Front Matter ***
+\doublespacing{}
+\pagenumbering{roman}
+\subfile{sections/00_title.tex}
+\subfile{sections/01_abstract.tex}
+\subfile{sections/02_copyright.tex}
+\subfile{sections/03_acknowledgements.tex}
+\subfile{sections/04_table_of_contents.tex}
+\subfile{sections/05_list_of_figures.tex}
+\subfile{sections/06_list_of_tables.tex}
+
+% *** Body ***
+\pagenumbering{arabic}
+\subfile{sections/10_intro.tex}
+\subfile{sections/20_background.tex}
+\subfile{sections/30_methods.tex}
+\subfile{sections/40_results.tex}
+\subfile{sections/50_conclusion.tex}
+
+% Bibliography
+\printbibliography{}
+
+\appendix
+
+\end{document}

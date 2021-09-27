@@ -1,0 +1,68 @@
+\documentclass[../stegner_thesis.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Introduction}%
+\label{ch:intro}
+
+\section{Motivation}%
+\label{sec:intro_motivation}
+
+\par Cyber security is an ever increasing need, especially as society relies
+increasingly upon online services.
+%dependence on online services is accelerated by the coronavirus pandemic.
+In recent times, several notable cyber attacks have demonstrated the need to
+further our knowledge of cyber threats.
+In the SolarWinds security breach, an adversary was able to spread malicious
+software to an estimated 100 companies and several agencies of the U.S.\
+federal government~\cite{temple-rastonWorstNightmare}.
+It is estimated that this attack could cost the U.S.\ government alone hundreds
+of millions of dollars~\cite{nolanEconomicCosts}.
+In a separate cyber attack, a major U.S.\ oil pipeline was compromised, leading
+to a temporary shutdown of the pipeline~\cite{penalozaCybersecurityAttack2021}.
+With such severe consequences, it is vital to increase our ability to detect
+and mitigate cyber threats.
+
+\par Detecting whether or not a software is malicious is a difficult task.
+The context under which software is executing plays an important role in
+understanding malicious behavior.
+A given sequence of opcodes or system calls is not necessarily malicious by
+nature because malice is relative to the desired outcome of running the
+software.
+If a specific opcode or system call was malicious, it would simply not be built
+into the system in the first place.
+
+\par Take, for example, an autonomous drone with an onboard camera; turning the
+camera on and off is not inherently malicious, otherwise the camera would be
+hard-wired on.
+There can be some times when turning the camera off is a desired, benign
+action, such as saving power on the drone or preserving privacy in sensitive
+locations.
+That being said, a malicious software can cripple the functionality of a drone
+by switching off the camera at undesired times.
+The determining factor on whether or not turning the camera off is malicious is
+the context in which the software chose to turn it off.
+
+\section{Outline}%
+\label{sec:intro_outline}
+
+\par \secref{ch:background} outlines the prerequisite background topics,
+including malware analysis and the machine learning techniques used in this
+work.
+Next, a brief literature review of relevant efforts in malware detection and
+context-aware software analysis is given.
+
+\par \secref{ch:methods} details our methodology in developing a context-aware
+malware detection model.
+We discuss the central point of how we should define context, as well as the
+rationale for several proof-of-concept context-aware model iterations.
+
+\par \secref{ch:results} presents the results of the models explained in
+\secref{ch:methods}, including a discussion of how well context is addressed.
+
+\par Finally, \secref{ch:conclusion} discusses the main takeaways from our work,
+including a summary of areas of improvement for future work.
+
+\newpage
+
+\end{document}

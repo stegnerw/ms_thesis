@@ -1,0 +1,202 @@
+\documentclass[../stegner_thesis.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Background}%
+\label{ch:background}
+
+\section{Prerequisite Topics}%
+\label{sec:bg_prereq}
+
+\par First, we will explain some prerequisite knowledge which will be necessary
+for full understanding of this research.
+
+\subsection{Overview of Malware Analysis}%
+\label{subsec:bg_malware_analysis}
+
+\par Malware analysis exists in two categories: static analysis and dynamic
+analysis~\cite{gadhiyaTechniquesMalware2013}.
+Static analysis refers to any technique in which a file is examined without
+running the code, whereas dynamic analysis involves actually running the code
+and observing its behavior.
+
+\par Static analysis of binary files is difficult because they are designed to
+be read by computers and not humans.
+To solve this issue, it is common to use a disassembly tool, such as IDA
+Pro~\cite{IDAPro} or Ghidra~\cite{nsaGhidra}.
+Disassembly is the process of taking an executable file and extracting the
+assembly code and any annotations which are present.
+The disassembly can then be analyzed for patterns, such as specific sequences
+of opcodes (known as signatures), or further feature extraction can be done.
+Other interesting features in static analysis include looking for system calls,
+hard-coded data such as strings, and control-flow features.
+Static analysis is generally safe because no malicious software must be run.
+However, it may be difficult to statically examine code if it has been
+obfuscated.
+
+\par Dynamic analysis involves running software samples and observing the
+resulting behavior.
+This analysis is typically done in a sandboxed environment, such as a virtual
+machine, to contain any malicious behaviors.
+In dynamic analysis, interesting features to collect include the dynamic
+assembly sequence, system call sequence, and system changes such as file
+modifications or registry edits.
+Dynamic analysis is advantageous because even if code is obfuscated, malicious
+actions can be observed which may not have been apparent through static
+analysis.
+However, some malicious code can detect that it is in a sandbox and mask its
+malicious behavior to avoid detection.
+
+\subsection{Latent Dirichlet Allocation}%
+\label{subsec:bg_lda}
+
+\par Latent Dirichlet Allocation (LDA) is a generative statistical model used
+in natural language processing (NLP) to model data, such as a corpus of
+documents~\cite{bleiLatentDirichlet2003}.
+LDA is used to learn topics from the corpus which can be used to describe the
+documents, such that each document is a mixture of those topics, and each topic
+is a distribution over the vocabulary of the corpus.
+In other words, LDA aims to learn which words in the vocabulary are related to
+each other and group related words into topics, and then it assigns each
+document a weighting of each topic.
+Please note that in the literature, the number of topics is often called $k$.
+This naming interferes with $k$ from k-Nearest Neighbors (k-NN).
+To resolve this issue, we will refer to the number of topics simply as ``number
+of topics'' and the k-NN parameter as $k$.
+
+\par Before training an LDA model, the corpus must be translated into a
+bag-of-words (BoW) model.
+A BoW model counts the frequency of words in a document.
+For example, given a document ``cat dog mouse cat cat dog'', the BoW
+representation is $\{``cat'':3, ``dog'':2, ``mouse'':1\}$.
+BoW models are common in NLP and machine learning because they turn documents
+into vectors of equal length which can be easily compared.
+While BoW is sometimes used directly for classification, we will be using it as
+preprocessing for LDA\@.
+
+\par An extension of LDA is hierarchical LDA
+(hLDA)~\cite{bleiHierarchicalTopic2004}.
+Similarly to LDA, the goal of hLDA is to learn latent topics from a corpus of
+documents.
+However, in hLDA, the topics are organized in hierarchically.
+At the top of the hierarchy is the most general topic, then as the topics go
+deeper in the hierarchy, they become more specific.
+The hierarchical organization is beneficial because topics are naturally
+arranged hierarchically and can be broken into more specific topics.
+However, LDA is much simpler to use because the resultant data is simply a
+vector.
+
+\par To evaluate the quality of an LDA model, there are two primary methods:
+intrinsic and extrinsic evaluation~\cite{dietzTopicModel}.
+Intrinsic evaluation of a set of topics generally uses measures such as
+perplexity or topic coherence.
+These measures are advantageous because they are unsupervised measures, and
+therefore do not depend on labeled data.
+On the other hand, extrinsic evaluations based on classification tasks can be
+more convenient if the end goal is to use the LDA model for classification.
+
+\subsection{k-Nearest Neighbors}%
+\label{subsec:bg_knn}
+
+\par k-Nearest Neighbors (k-NN) is a machine learning algorithm which can be
+used for classification~\cite{hastieElementsStatistical}.
+The algorithm is simple to use, as typically the only parameter is $k$.
+In k-NN, first a labeled training set is presented to the model, which the
+model stores for later comparison.
+The model is then used to assign classes to new data points.
+The class of the new data point is determined by a vote among the nearest $k$
+neighbors (typically determined by Euclidean distance, but any distance can
+work).
+A common modification to k-NN is weighting the vote of each neighbor by the
+inverse of its distance, making closer neighbors are more influential in the
+vote.
+The k-NN classifier is a useful tool because it requires no training iterations
+and has few parameters to tune (typically just $k$).
+
+\section{Malware Classification with LDA}%
+\label{sec:bg_malware_class}
+
+\par LDA has been applied to the field of malware classification~\cite{%
+	sundarkumarMalwareDetection2015,
+	greerUnsupervisedInterpretable2019,
+	djaneye-boundjouStaticAnalysis2019a,
+}.
+
+\par Sundarkumar et al.~\cite{sundarkumarMalwareDetection2015} collected
+application programming interface (API) calls from a set of programs and then
+trained an LDA model on those API calls.
+The LDA features were then classified using various machine learning
+classifiers with a maximum accuracy of 98.61\%.
+
+\par Greer~\cite{greerUnsupervisedInterpretable2019} utilized LDA and hLDA to
+model both static and dynamic opcode sequences of sorting and searching
+programs.
+The LDA and hLDA results were both shown to differentiate between sorting and
+searching program classes.
+The analysis of the topic similarity was done by hand and not computationally,
+though these results did show promise in LDA to distinguish between program
+behavior based on low-level features.
+
+\par Djaneye-Bounjou et al.~\cite{djaneye-boundjouStaticAnalysis2019a} extended
+Greer's work by applying LDA to static opcode sequences to classify malware.
+They classified the Microsoft Malware Classification Challenge (BIG 2015)
+malware dataset~\cite{ronenMicrosoftMalware2018} using a k-NN classifier on the
+topic distributions with an accuracy of 97.2\%.
+
+\section{Context in Software Analysis}%
+\label{sec:bg_context}
+
+\par Fernandez et al.~\cite{fernandezContextsContextbased2007} proposed a model
+for context-based access control policy focusing on mobile devices.
+The idea was to limit access to certain sensitive resources based on the
+context of the system.
+Context is comprised of elements, such as the physical context (i.e., location
+data), and the logical context, which includes a device profile, a user
+profile, and a task profile.
+The premise of using physical specifications to help define the context was of
+interest to us, but the overall model was fairly user-centric, making it
+incompatible with autonomous vehicles (one of the motivations for this
+research).
+
+\par Shebaro et al.~\cite{shebaroContextbasedAccess2015} also worked on
+context-based access control policies for mobile devices, but this study was
+more application focused.
+Their access control policy was similar to that
+of~\cite{fernandezContextsContextbased2007}, but the context was mostly based
+on location.
+The study features an experiment where certain features of the mobile device
+were restricted at certain locations.
+This type of access control can work for situations with a small, pre-defined
+setting, such as an office building.
+However, it requires manual definition of acceptable context zones, which is
+less desirable for scalability.
+
+\par Shrestha et al.~\cite{shresthaTapwaverubLightweight2015} developed a
+different approach to implementing context in a mobile platform.
+Instead of basing context on the location, they define their context based on
+physical gestures done by the user.
+These gestures are intended to ensure that the user was the one who triggered
+certain sensitive actions to prevent automated attacks by malware.
+Because the context is defined solely based on user interaction, it does not
+satisfy our needs.
+
+\par Narayanan et al.~\cite{narayananContextawareAdaptive2017} also aimed their
+study at mobile devices, focusing on context-aware malware detection for
+Android phones.
+They utilize program representation graphs, such as system call graphs, to
+represent applications running on the devices.
+By examining the entry point to sensitive functions, such as accessing position
+data, the context is defined according to whether the user was aware or unaware
+of the action.
+Again, while this definition of context works well for mobile devices, it does
+not generalize to autonomous systems.
+
+\par The existing contextual methods discussed in this section have provided
+some insight into how to define context.
+However, they all target mobile devices, such as smart phones, and typically
+require on some user interaction to define the context.
+There is still a need to pursue the topic of context-aware malware detection.
+
+\newpage
+
+\end{document}

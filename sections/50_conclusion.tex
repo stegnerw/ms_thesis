@@ -1,0 +1,134 @@
+\documentclass[../stegner_thesis.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Conclusion}%
+\label{ch:conclusion}
+
+\par In this research, we have explored the definition of context in malware
+detection and two proof-of-concept context-aware models.
+These models use LDA to extract structural features from the code, combining
+those features with contextual features to detect context violations.
+The first model utilizes the system's physical context, while the second
+compares the expected and actual behavior of the programs.
+These models are successfully able to detect their respective context
+violations.
+
+\par The primary takeaway from this work is that it is difficult to define
+precisely what context is in malware analysis.
+In fact, a significant endeavor on this research was just determining how to
+frame context for software.
+We framed the idea of context as a series of questions which we should answer,
+but they do not translate directly into a computational model.
+The proof-of-concept models we presented showed strong performance at their
+designated tasks, but they do not make up a complete picture of context,
+leaving room for a multitude of future research directions.
+
+\section{Future Work}%
+\label{sec:concl_future}
+
+\subsection{Practical Example}%
+\label{sec:concl_practical_example}
+
+\par The example scenarios presented in this work were at an abstract level and
+do not extend well to practical examples.
+To continue working on context-aware models, a more concrete, practical example
+must be explored.
+One of the biggest barriers in testing a practical example is the nature of
+publicly available datasets.
+These datasets are not designed with context in mind, so they do not include
+the necessary information required to establish context.
+Ideally, each file in the dataset should be labeled with contextual
+information, such as the intended behavior of the file.
+Such a dataset would prove invaluable to the development of future
+context-aware models.
+
+\subsection{Dynamic Analysis}%
+\label{sec:concl_dynamic}
+
+\par In this work, we only utilized static analysis techniques.
+For future work, it would be advantageous to include dynamic analysis features
+and use them in conjunction with the static analysis.
+Combining the two types of features could improve the robustness of the models.
+Our initial model included dynamic assembly trace features and high-level
+behavioral features, but these features were not included in the final model
+due to time limitations in collecting the data.
+While the static LDA features were shown to be effective at classifying the
+datasets, taking both dynamic assembly sequences and high-level behavioral
+features would contribute a more complete picture of the programs.
+Additionally, high-level behavioral features are more interpretable than
+the LDA topics because they convey tangible actions as opposed to the structure
+of the underlying code.
+The static opcode analysis could be bypassed if the attacker has knowledge of
+the detection strategy, but high-level features must occur in some form to
+actually perform a given action.
+
+\par Another limitation of the static analysis is that it does not convey any
+temporal relationships between events.
+In reality, actions will happen in a time sequence over the duration of program
+execution.
+Having time-series data of high-level behaviors with correlating environmental
+information will help to develop a more complex contextual model.
+
+\subsection{Biological Inspiration}%
+\label{sec:concl_biological}
+
+\par A huge area to improve on this work is looking at biological inspiration
+for the formation of context.
+So far, we have relied on statistical methods to implement the context-aware
+models.
+While we were able to accomplish small pieces of the context problem this way,
+it is becoming apparent that statistical methods alone will not be able to
+completely solve the problem of context.
+Instead, it would be interesting to look for some biological inspiration into
+how the brain creates context.
+When a reverse engineer looks at a program, they are able to use context they
+have developed from past experience as well as knowledge of the overall  system
+to determine whether an action is malicious or benign.
+The end-goal would be to develop a model which can mimic the way a human expert
+can assess the context of a program.
+To aid with the biological inspiration, neurologically inspired computational
+models should be investigated.
+
+\subsection{Physical Context Model}%
+\label{sec:concl_physical_context}
+
+\par One of the most obvious areas for improvement is in the physical context
+model, as this work leaves that system as a black box.
+Testing should be done to try different kinds of models to see how to most
+effectively utilize the data.
+In our system, we had the physical context model separated from the rest of the
+model, but it may be a better idea to use a model which can directly learn
+which actions are allowed in which context.
+Exploring neural networks or another model which actually ``learns'' would be
+an ideal starting point.
+
+\subsection{Combining Context Models}%
+\label{sec:concl_combining_context}
+
+\par At this point, the physical context and expected behavior context is
+evaluated in two separate models.
+However, it is necessary to consider both of these elements to determine if a
+given program is well-behaved given the context.
+There are several options, each with varying levels of implementation
+difficulty and robustness.
+The simplest solution would be to keep the models separate and just say that
+a program must pass either individual context check.
+However, this solution may not be robust enough, as it considers the context
+separately and not wholistically.
+
+\subsection{Parameter Tuning}%
+\label{sec:concl_parameter_tuning}
+
+\par In this work, some basic parameter exploration was done on the LDA and
+k-NN algorithms.
+However, the randomness of LDA fitting caused large error bars for the k-NN
+classification accuracy which have significant overlap.
+It is possible that further refinement of the LDA parameters aside from just
+the number of topics is required to get more consistent results over this type
+of data.
+Future work should be done to try to refine the parameter tuning.
+
+\newpage
+
+\end{document}
