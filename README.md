@@ -9,7 +9,7 @@ Both the report and defense slides share the [./img/](./img/) directory.
 
 If you like my work, please give it a download over at [OhioLINK](
 http://rave.ohiolink.edu/etdc/view?acc_num=ucin162766765703398) and bump up my
-download count. ;)
+download count. :)
 
 It is also available as a technical report published by AFRL [here](
 https://apps.dtic.mil/sti/citations/AD1146448), although please note there were
@@ -25,11 +25,3 @@ for public release.
 
 I have a NAECON publication pending for this work.
 I will link it when it is published.
-
-## License
-
-This work is distributed under a [Creative Commons
-Attribution-NonCommercial-ShareAlike 3.0 Unported License](
-https://creativecommons.org/licenses/by-nc-sa/3.0/).
-
-![CC BY-NC-SA 3.0](./img/CC_BY-NC-SA_3.0.png)
